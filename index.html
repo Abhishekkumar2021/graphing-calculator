@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <body>
+    <div id="app" class="justify-center bg-zinc-100" >
+      <section class="min-h-screen w-full p-4 flex items-center justify-center gap-8 flex-col bg-zinc-900" id="main">
+        <h1 class="text-4xl font-bold text-center text-blue-300">Graphing Calculator</h1>
+        <div class="flex justify-center shadow-lg">
+          <input
+            class="flex-1 px-4 py-3 outline-none border-none bg-zinc-700 text-xl text-white"
+            type="text"
+            placeholder="Enter a function"
+          />
+          <a
+          href="#result"
+            class="px-6 py-3 text-xl bg-blue-500 text-white hover:bg-blue-600 transition-all ease-linear duration-200"
+          >
+            Plot
+          </a>
+        </div>
+        <a href="#main" class="fixed right-3 bottom-3 px-4 py-2 shadow-md bg-zinc-600
+        rounded-md active:scale-95 transition-all ease-linear duration-200">Go Home</a>
+      </section>
+      <canvas class="items-center h-screen w-full bg-zinc-800" id="result"> 
+      </canvas>
+      <section id="colors" class="fixed top-4 right-4 flex flex-col gap-2 bg-zinc-700 p-4 rounded-md">
+        <div class="flex gap-2 items-center justify-between">
+          <label for="axes">Axes color</label>
+          <input type="color" class="w-10 h-8 rounded-sm bg-zinc-400" id="axes" value="#FFFFFF">
+        </div>
+        <div class="flex gap-2 items-center justify-between">
+          <label for="graph">Graph color</label>
+          <input type="color" class="w-10 h-8 rounded-sm bg-zinc-400" id="graph" value="#FFFF00">
+        </div>
+      </section>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
