@@ -10,7 +10,7 @@
         <h1 class="text-4xl font-bold text-center text-blue-500">Graphing Calculator</h1>
         <div class="flex justify-center shadow-lg">
           <input
-            class="flex-1 px-4 py-3 outline-none border-none text-sm md:text-xl"
+            class="flex-1 px-4 py-3 bg-white text-black outline-none border-none text-sm md:text-xl"
             type="text"
             placeholder="Enter a function"
           />
@@ -24,7 +24,7 @@
       </section>
       <canvas class="items-center h-screen w-full bg-zinc-50" id="result"> 
       </canvas>
-      <section id="colors" class="fixed top-4 right-4 flex flex-col gap-2 bg-white p-4 shadow-xl rounded-md">
+      <section id="colors" class="fixed top-4 right-4 flex flex-col gap-2 bg-white p-4 shadow-md rounded-md text-black select-none border-2 border-zinc-200">
         <div class="flex gap-2 items-center justify-between text-sm">
           <label for="axes">Axes color</label>
           <input type="color" class="w-8 h-6 rounded-sm bg-zinc-400" id="axes" value="#123456">

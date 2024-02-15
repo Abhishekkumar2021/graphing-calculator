@@ -1,5 +1,7 @@
 import './style.css'
 import { simplify } from 'mathjs'
+import { newtonRhapson } from './roots';
+
 // ! is a non-null assertion operator i.e. it tells the compiler that the value is not null
 const canvas = document.querySelector('canvas')! as HTMLCanvasElement;
 const input = document.querySelector('input')! as HTMLInputElement;
@@ -86,11 +88,44 @@ const drawGraph = (fn: string) => {
   ctx.beginPath();
   ctx.strokeStyle = graphColor;
   ctx.lineWidth = 3;
-  for (let x = minX; x < maxX; x += 5) {
-    const y = simplified.evaluate({ x: x / scale }) * scale;
-    ctx.lineTo(x + origin.x, -y + origin.y);
+  const boundary = {
+    xMin: -5*scale,
+    xMax: width + 5*scale,
+    yMin: -5*scale,
+    yMax: height + 5*scale
+  }
+  for (let x = minX; x <= maxX; x += 4) {
+    let y = (simplified.evaluate({ x: x / scale }) * scale);
+    if(isNaN(y)) {
+      continue;
+    }
+    // If value is going out of the canvas, then skip it
+    const xPos = x + origin.x;
+    const yPos = -y + origin.y;
+    if(xPos < boundary.xMin || xPos > boundary.xMax || yPos < boundary.yMin || yPos > boundary.yMax) {
+      continue;
+    }
+    ctx.lineTo(xPos, yPos);
   }
   ctx.stroke();
+}
+
+// Finding root of the equation
+const drawRoot = (x: number) => {
+  if(isNaN(x)) {
+    return;
+  }
+  ctx.beginPath();
+  const xPos = x*scale + origin.x;
+  // draw circle
+  ctx.arc(xPos, origin.y, 10, 0, Math.PI * 2, true);
+  ctx.fillStyle = graphColor;
+  // show values of x
+  ctx.font = '20px Arial';
+  ctx.fillStyle = axesColor;
+  ctx.fillText(`x = ${x}`, xPos + 10, origin.y + 30);
+  ctx.fill();
+  ctx.closePath();
 }
 
 drawGrid();
@@ -103,6 +138,7 @@ button.addEventListener('click', () => {
   curve = input.value;
   if(curve) {
     drawGraph(curve);
+    drawRoot(newtonRhapson(curve, width/2));
   }
 });
 
@@ -132,6 +168,7 @@ canvas.addEventListener('wheel', (e) => {
     drawGrid();
     drawAxes();
     drawGraph(curve);
+    drawRoot(newtonRhapson(curve, width/2));
   }
 });
 
@@ -141,6 +178,7 @@ window.addEventListener('resize', () => {
   drawGrid();
   drawAxes();
   drawGraph(curve);
+    drawRoot(newtonRhapson(curve, width/2));
 });
 
 axesColorInput.addEventListener('input', () => {
@@ -149,6 +187,7 @@ axesColorInput.addEventListener('input', () => {
   drawGrid();
   drawAxes();
   drawGraph(curve);
+    drawRoot(newtonRhapson(curve, width/2));
 });
 
 graphColorInput.addEventListener('input', () => {
@@ -157,6 +196,7 @@ graphColorInput.addEventListener('input', () => {
   drawGrid();
   drawAxes();
   drawGraph(curve);
+    drawRoot(newtonRhapson(curve, width/2));
 });
 
 // Drag left and right to move the graph
@@ -188,6 +228,7 @@ canvas.addEventListener('mousemove', (e) => {
     drawGrid();
     drawAxes();
     drawGraph(curve);
+    drawRoot(newtonRhapson(curve, width/2));
   }
 });
 
@@ -197,13 +238,16 @@ canvas.addEventListener('mouseleave', () => {
 
 // double click to reset the graph
 canvas.addEventListener('dblclick', () => {
-  origin.x = width / 2;
-  origin.y = height / 2;
-  maxX = width/2;
-  minX = -width/2;
-  scale = 40;
-  clearCanvas()
-  drawGrid();
-  drawAxes();
-  drawGraph(curve);
+  if (origin.x !== width / 2 || origin.y !== height / 2) {
+    origin.x = width / 2;
+    origin.y = height / 2;
+    maxX = width/2;
+    minX = -width/2;
+    scale = 40;
+    clearCanvas()
+    drawGrid();
+    drawAxes();
+    drawGraph(curve);
+    drawRoot(newtonRhapson(curve, width/2));
+  }
 });
