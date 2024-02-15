@@ -1,18 +1,16 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Graphing Calculator</title>
   </head>
   <body>
     <div id="app" class="justify-center bg-zinc-100" >
-      <section class="min-h-screen w-full p-4 flex items-center justify-center gap-8 flex-col bg-zinc-900" id="main">
-        <h1 class="text-4xl font-bold text-center text-blue-300">Graphing Calculator</h1>
+      <section class="min-h-screen w-full p-4 flex items-center justify-center gap-8 flex-col bg-zinc-100" id="main">
+        <h1 class="text-4xl font-bold text-center text-blue-500">Graphing Calculator</h1>
         <div class="flex justify-center shadow-lg">
           <input
-            class="flex-1 px-4 py-3 outline-none border-none bg-zinc-700 text-sm md:text-xl text-white"
+            class="flex-1 px-4 py-3 outline-none border-none text-sm md:text-xl"
             type="text"
             placeholder="Enter a function"
           />
@@ -24,16 +22,16 @@
           </a>
         </div>
       </section>
-      <canvas class="items-center h-screen w-full bg-zinc-800" id="result"> 
+      <canvas class="items-center h-screen w-full bg-zinc-50" id="result"> 
       </canvas>
-      <section id="colors" class="fixed top-4 right-4 flex flex-col gap-2 bg-zinc-800 p-4 shadow-2xl border-2 border-zinc-700 rounded-md">
+      <section id="colors" class="fixed top-4 right-4 flex flex-col gap-2 bg-white p-4 shadow-xl rounded-md">
         <div class="flex gap-2 items-center justify-between text-sm">
           <label for="axes">Axes color</label>
-          <input type="color" class="w-8 h-6 rounded-sm bg-zinc-400" id="axes" value="#FFFFFF">
+          <input type="color" class="w-8 h-6 rounded-sm bg-zinc-400" id="axes" value="#123456">
         </div>
         <div class="flex gap-2 items-center justify-between text-sm">
           <label for="graph">Graph color</label>
-          <input type="color" class="w-8 h-6 rounded-sm bg-zinc-400" id="graph" value="#FFFF00">
+          <input type="color" class="w-8 h-6 rounded-sm bg-zinc-400" id="graph" value="#FF0000">
         </div>
       </section>
     </div>

@@ -17,8 +17,8 @@ const clearCanvas = () => {
 }
 
 let curve = '';
-let axesColor = 'white';
-let graphColor = 'yellow';
+let axesColor = '#123456';
+let graphColor = 'red';
 
 let scale = 40;
 const origin = {
@@ -30,7 +30,7 @@ const drawGrid = () => {
   // start from origin and draw horizontal lines
   for(let x = origin.x; x < width; x += scale) {
     ctx.beginPath();
-    ctx.strokeStyle = '#3c3c3c';
+    ctx.strokeStyle = '#919191';
     ctx.lineWidth = 1;
     ctx.moveTo(x, 0);
     ctx.lineTo(x, height);
@@ -39,7 +39,7 @@ const drawGrid = () => {
 
   for(let x = origin.x; x > 0; x -= scale) {
     ctx.beginPath();
-    ctx.strokeStyle = '#3c3c3c';
+    ctx.strokeStyle = '#919191';
     ctx.lineWidth = 1;
     ctx.moveTo(x, 0);
     ctx.lineTo(x, height);
@@ -49,7 +49,7 @@ const drawGrid = () => {
   // start from origin and draw vertical lines
   for(let y = origin.y; y < height; y += scale) {
     ctx.beginPath();
-    ctx.strokeStyle = '#3c3c3c';
+    ctx.strokeStyle = '#919191';
     ctx.lineWidth = 1;
     ctx.moveTo(0, y);
     ctx.lineTo(width, y);
@@ -58,7 +58,7 @@ const drawGrid = () => {
 
   for(let y = origin.y; y > 0; y -= scale) {
     ctx.beginPath();
-    ctx.strokeStyle = '#3c3c3c';
+    ctx.strokeStyle = '#919191';
     ctx.lineWidth = 1;
     ctx.moveTo(0, y);
     ctx.lineTo(width, y);
@@ -195,80 +195,6 @@ canvas.addEventListener('mouseleave', () => {
   mouseDown = false;
 });
 
-
-// For touch devices
-canvas.addEventListener('touchstart', (e) => {
-  mouseDown = true;
-  lastX = e.touches[0].clientX;
-  lastY = e.touches[0].clientY;
-});
-
-canvas.addEventListener('touchend', () => {
-  mouseDown = false;
-});
-
-canvas.addEventListener('touchmove', (e) => {
-  if (mouseDown) {
-    const xDiff = lastX - e.touches[0].clientX;
-    const yDiff = lastY - e.touches[0].clientY;
-    origin.x -= xDiff;
-    origin.y -= yDiff;
-    maxX += xDiff;
-    minX += xDiff;
-    lastX = e.touches[0].clientX;
-    lastY = e.touches[0].clientY;
-    clearCanvas()
-    drawGrid();
-    drawAxes();
-    drawGraph(curve);
-  }
-});
-
-canvas.addEventListener('touchcancel', () => {
-  mouseDown = false;
-});
-
-// zoom in and out feature for touch devices
-canvas.addEventListener('touchmove', (e) => {
-  if (e.touches.length === 2) {
-    e.preventDefault();
-    const touch1 = e.touches[0];
-    const touch2 = e.touches[1];
-    const distance = Math.sqrt(
-      (touch1.clientX - touch2.clientX) ** 2 +
-      (touch1.clientY - touch2.clientY) ** 2
-    );
-    if (distance > 100) {
-      scale *= 1.1;
-    } else {
-      scale /= 1.1;
-    }
-    clearCanvas()
-    drawGrid();
-    drawAxes();
-    drawGraph(curve);
-  }
-});
-
-// double tap to reset the graph
-let lastTap = 0;
-canvas.addEventListener('touchend', (e) => {
-  const now = new Date().getTime();
-  if (now - lastTap < 300) {
-    e.preventDefault();
-    origin.x = width / 2;
-    origin.y = height / 2;
-    maxX = width/2;
-    minX = -width/2;
-    scale = 40;
-    clearCanvas()
-    drawGrid();
-    drawAxes();
-    drawGraph(curve);
-  }
-  lastTap = now;
-});
-
 // double click to reset the graph
 canvas.addEventListener('dblclick', () => {
   origin.x = width / 2;
@@ -281,4 +207,3 @@ canvas.addEventListener('dblclick', () => {
   drawAxes();
   drawGraph(curve);
 });
-
